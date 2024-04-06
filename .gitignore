@@ -13,3 +13,5 @@ _repo.*/
 *.DS_Store
 *.lnk
 node_modules/
+
+.fake
