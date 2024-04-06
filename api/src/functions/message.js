@@ -1,5 +1,4 @@
 const { app } = require('@azure/functions');
-const { app } = require('@azure/functions');
 
 app.http('message', {
     methods: ['GET', 'POST'],
@@ -9,6 +8,6 @@ app.http('message', {
 
         const name = request.query.get('name') || await request.text() || 'world';
 
-        return { body: `Hello, ${name}!` };
+        return { body: `Hello, ${name}!`, text: 'Hello from the API'};
     }
 });
