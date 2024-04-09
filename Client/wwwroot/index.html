@@ -15,27 +15,33 @@
     
     <main>
         <p>Loading content from the API: <b id="name">...</b></p>
+
+        <div id="app">Loading...</div>  
+    
+        <div id="blazor-error-ui">
+            An unhandled error has occurred.
+            <a href="" class="reload">Reload</a>
+            <a class="dismiss">🗙</a>
+        </div>
     </main>
-    <div id="app">Loading...</div>  
-    
-    <div id="blazor-error-ui">
-        An unhandled error has occurred.
-        <a href="" class="reload">Reload</a>
-        <a class="dismiss">🗙</a>
-    </div>
-    
+        
     <script>
         (async function() {
 
             try{
-                const messageRespose =  await fetch('/api/message');
+                console.log('Try Fetching message function from the API');
+                const messageResponse =  await fetch('/api/message');
+                console.log('Successfully got a response: ', messageResponse);
 
-                const { text } = await  messageRespose.json();
-                
+                console.log('Try Parsing the response');
+                const { text } = await messageResponse.json();
+                console.log('Successfully parsed the response, extracting text property value : ', text);
+                              
                 document.querySelector('#name').textContent = text;
 
             } 
             catch (error) {
+                
                 console.error('Error', error);
             }
         }());
