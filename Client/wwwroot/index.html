@@ -27,9 +27,17 @@
     <script>
         (async function() {
 
-            const { text } = await( await fetch(`/api/message`)).json();
-            
-            document.querySelector('#name').textContent = text;
+            try{
+                const messageRespose =  await fetch('/api/message');
+
+                const { text } = await  messageRespose.json();
+                
+                document.querySelector('#name').textContent = text;
+
+            } 
+            catch (error) {
+                console.error('Error', error);
+            }
         }());
     </script>
 

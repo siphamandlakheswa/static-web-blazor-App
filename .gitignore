@@ -16,3 +16,4 @@ _repo.*/
 node_modules/
 
 .fake
+.env

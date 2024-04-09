@@ -10,7 +10,9 @@
       "appBuildCommand": "dotnet publish -c Release -o bin",
       "apiBuildCommand": "npm run build --if-present",
       "run": "dotnet watch run",
-      "appDevserverUrl": "http://localhost:8000"
+      "appDevserverUrl": "http://localhost:8000",
+      "appName": "static-web-blazor-app",
+      "resourceGroup": "static-web-blazor-app-rg"
     }
   }
 }
