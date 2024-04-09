@@ -1,54 +1,38 @@
-name: Azure Static Web Apps CI/CD Prod workflow using Github Actions
+name: Azure Static Web Apps CI/CD
 
-# Triggering the workflow on push or pull request to main branch.
 on:
   push:
-    # The branches that will trigger this workflow.
-    branches:      
+    branches:
       - main
   pull_request:
-    # The types of events that trigger this workflow.
     types: [opened, synchronize, reopened, closed]
     branches:
       - main
-# Jobs that will run in the workflow.
-jobs:
 
-  # Job to build and deploy the application.
+jobs:
   build_and_deploy_job:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
-    # The type of machine that the job will run on.
-    runs-on: ubuntu-latest    
-    name: Build and Deploy on ubuntu-latest machine
+    runs-on: ubuntu-latest
+    name: Build and Deploy Job
     steps:
-
-      # Checkout Code Repository: In order to deploy the code, we need to checkout the code from the repository
-      - name: Checkout Code Repository using Github main branch
-        id: checkoutrepo
-        # This Github action checks-out your repository under $GITHUB_WORKSPACE, so your workflow can access it.
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
-          # If set True then it will fetch all the tags for the repository.
           submodules: true
-          # 
-          lfs: true
-      # This Github Action enables developers to build and publish their 
-      # applications to Azure App Service Static Web Apps. This action utilizes
-      # [Oryx](https://github.com/microsoft/Oryx) to detect and build an application, 
-      # then uploads the resulting application content, as well as any Azure Functions, to Azure. 
-      - name: Build and Publish GitHub Action for deploying to Azure Static Web Apps
+          lfs: false
+      - name: Build And Deploy
         id: builddeploy
-        # Deploys an Application to Azure Static Web Apps.
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
-          repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for GitHub integrations (i.e. PR comments)
+          repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
           action: "upload"
-          ###### Repository/Build Configurations ######
-          app_location: "client" # App source code path relative to repository root
-          api_location: "api" # Api source code path relative to repository root - optional         
+          ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
+          # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
+          app_location: "Client" # App source code path
+          api_location: "Api" # Api source code path - optional
+          output_location: "wwwroot" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
-  # Job to close the pull request.       
+
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
     runs-on: ubuntu-latest
@@ -58,6 +42,5 @@ jobs:
         id: closepullrequest
         uses: Azure/static-web-apps-deploy@v1
         with:
-          app_location: "client"
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
           action: "close"
