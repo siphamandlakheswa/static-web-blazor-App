@@ -14,35 +14,48 @@
 <body>
     
     <main>
-        <p>Loading content from the API: <b id="name">...</b></p>
 
-        <div id="app">Loading...</div>  
-    
-        <div id="blazor-error-ui">
-            An unhandled error has occurred.
-            <a href="" class="reload">Reload</a>
-            <a class="dismiss">🗙</a>
-        </div>
+        <p>Loading content from the Azure Function API>: 
+            <b id="name">...</b>
+        </p>        
+
     </main>
-        
+
+    <div id="app">Loading...</div>  
+    
+    <div id="blazor-error-ui">
+        An unhandled error has occurred.
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">🗙</a>
+    </div>        
+
     <script>
         (async function() {
 
             try{
-                console.log('Try Fetching message function from the API');
-                const messageResponse =  await fetch('/api/message');
-                console.log('Successfully got a response: ', messageResponse);
+                // console.log('Try Fetching message function from the API');
+                // const messageResponse =  await fetch('/api/message');
+                // console.log('Successfully got a response: ', messageResponse);
 
-                console.log('Try Parsing the response');
-                const { text } = await messageResponse.json();
-                console.log('Successfully parsed the response, extracting text property value : ', text);
+                // console.log('Try Parsing the response');
+                // const { text } = await messageResponse.json();
+                // console.log('Successfully parsed the response, extracting text property value : ', text);
                               
-                document.querySelector('#name').textContent = text;
+                // document.querySelector('#name').textContent = text;
 
+                
+                console.log('---Try Parsing the response---');
+                var message = await fetch(`/api/message`);
+                const { text } = await( message ).json();
+                console.log('Successfully parsed the respons, extracting text property value : ', text);
+
+                console.log('Update the textContent with the response value');
+            	document.querySelector('#name').textContent = text;
+                console.log('Successfully updated the textContent with the response value');    
             } 
             catch (error) {
                 
-                console.error('Error', error);
+                console.log(error);
             }
         }());
     </script>
