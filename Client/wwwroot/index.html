@@ -30,35 +30,20 @@
     </div>        
 
     <script>
-        (async function() {
-
-            try{
-                // console.log('Try Fetching message function from the API');
-                // const messageResponse =  await fetch('/api/message');
-                // console.log('Successfully got a response: ', messageResponse);
-
-                // console.log('Try Parsing the response');
-                // const { text } = await messageResponse.json();
-                // console.log('Successfully parsed the response, extracting text property value : ', text);
-                              
-                // document.querySelector('#name').textContent = text;
-
-                
+        (async function updateNamefromMessageFunction() {
+            try {
                 console.log('---Try Parsing the response---');
-                var message = await fetch('/api/Function1');
-                const { text } = await (message).json();
-
+                var message = await fetch('http://localhost:7071/api/message');
+                if (!message.ok) {
+                    throw new Error(`HTTP error! status: ${message.status}`);
+                }
+                const { text } = await message.json();
                 console.log('Successfully parsed the response, extracting text property value : ', text);
-
-                console.log('Update the textContent with the response value');
-            	document.querySelector('#name').textContent = text;
-                console.log('Successfully updated the textContent with the response value');    
-            } 
-            catch (error) {
-                
-                console.log(error);
+                document.querySelector('#name').textContent = text;
+            } catch (error) {
+                console.error('An error occurred:', error);
             }
-        }());
+        })();
     </script>
 
     <script src="_framework/blazor.webassembly.js"></script>
