@@ -45,9 +45,10 @@
 
                 
                 console.log('---Try Parsing the response---');
-                var message = await fetch(`/api/message`);
-                const { text } = await( message ).json();
-                console.log('Successfully parsed the respons, extracting text property value : ', text);
+                var message = await fetch('/api/Function1');
+                const { text } = await (message).json();
+
+                console.log('Successfully parsed the response, extracting text property value : ', text);
 
                 console.log('Update the textContent with the response value');
             	document.querySelector('#name').textContent = text;

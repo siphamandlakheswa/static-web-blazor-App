@@ -1,8 +1,0 @@
-{
-  "devDependencies": {
-    "@azure/static-web-apps-cli": "^0.2.1"
-  },
-  "dependencies": {
-    "@azure/functions": "^4.4.0"
-  }
-}
