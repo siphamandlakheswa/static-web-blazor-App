@@ -1,11 +1,13 @@
 {
   "name": "api",
   "version": "1.0.0",
+  "main": "messageindex*.js",
   "description": "",
   "scripts": {
     "start": "func start",
     "test": "echo \"No tests yet...\""
   },
-  "dependencies": {},
-  "devDependencies": {}
+  "dependencies": {
+    "@azure/functions": "^4.4.0"
+  }
 }
